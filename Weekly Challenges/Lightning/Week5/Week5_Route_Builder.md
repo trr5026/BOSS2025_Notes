@@ -105,7 +105,7 @@ Digging deeper into cltv/fee order between hops:
 
 ### Key Logic:
 
-### Backwards Computation: The function reverses the hop list (reversed_hops) and starts from the destination (Dave), calculating HTLCs back to the source (Alice).
+Backwards Computation: The function reverses the hop list (reversed_hops) and starts from the destination (Dave), calculating HTLCs back to the source (Alice).
 Fee and CLTV Delta Source: For each hop, the fee and CLTV delta come from the previous hop in the payment direction (i.e., the hop that forwards the payment), except for the last hop, which has no fee or delta.
 
 ### Step-by-Step for Alice → Bob → Carol → Dave
