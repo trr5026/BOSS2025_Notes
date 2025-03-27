@@ -52,11 +52,13 @@ If you are using Python you may want to specify json.loads(...,  parse_float=Dec
 If a BIP32 index is "hardened", you must add the offset 0x80000000 to the index before deriving the key - e.g. index 1h -> 0x80000001
 Look for your own compressed public keys as the second item (items[1]) in each witness stack
 Learn how to use certain RPC commands with (for example) bitcoin-cli -signet help getblock
-Example output
-# My wallet descriptor is
-# wpkh(tprv8ZgxMBicQKsPfCxvMSGLjZegGFnZn9VZfVdsnEbuzTGdS9aZjvaYpyh7NsxsrAc8LsRQZ2EYaCfkvwNpas8cKUBbptDzadY7c3hUi8i33XJ/84h/1h/0h/0/*)#nayduu7d
-$ python balance.py
-wallet_000 1644.12055731
+
+# Example output
+    '''My wallet descriptor is
+    wpkh(tprv8ZgxMBicQKsPfCxvMSGLjZegGFnZn9VZfVdsnEbuzTGdS9aZjvaYpyh7NsxsrAc8LsRQZ2EYaCfkvwNpas8cKUBbptDzadY7c3hUi8i33XJ/84h/1h/0h/0/*)#nayduu7d    
+    $ python balance.py
+    wallet_000 1644.12055731
+    '''
 
 ## base58_decode
     """
