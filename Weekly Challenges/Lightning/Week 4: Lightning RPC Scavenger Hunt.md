@@ -16,9 +16,9 @@ Lightning node pubkey: `02ef09cab9ba578cfa5158d6951148a276cbb005bba5d61b8f630b75
 
 ## Connect to lnd2:
 
-timrobertson@firefly:~$ lncli -n=signet connect 03ebc7280ff486f94cee51cff45a0fc521e9fe2560c02563ab191552fa90d4017d@boss2025.xyz:9737  
-{}  
-timrobertson@firefly:~$ lncli -n=signet listpeers  
+    timrobertson@firefly:~$ lncli -n=signet connect 03ebc7280ff486f94cee51cff45a0fc521e9fe2560c02563ab191552fa90d4017d@boss2025.xyz:9737  
+    {}  
+    timrobertson@firefly:~$ lncli -n=signet listpeers  
     '''
       {  
           "peers": [  
