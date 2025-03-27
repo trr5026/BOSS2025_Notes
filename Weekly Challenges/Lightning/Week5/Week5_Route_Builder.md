@@ -33,7 +33,12 @@ Debugging: Features detailed print statements and local test inputs.
 ### Decoding the Payment Request:
 
 Challenge: This was the most time-intensive part due to the complexity of BOLT 11 invoices. Decoding involved parsing Bech32 strings, extracting timestamp and tagged fields (e.g., payment hash, secret, CLTV expiry), and handling signature verification data. The sheer volume of fields and bit-level conversions made it a steep learning curve.
-One particular issue I had was converting between 5-bit and 8-bit fields. There is a convertbits method within the bech32 library that would just not work. The solution I found was to implement a method 'bech32toInt', which converted a bech32 field in 5-bit format to an integer, which was super useful for outputting the cltv_expiry and expiration_time. Here is Grok's explanation of that function:
+One particular issue I had was converting between 5-bit and 8-bit fields. There is a convertbits method within the bech32 library that would just not work. The solution I found was to implement a method 'bech32toInt', which converted a bech32 field in 5-bit format to an integer, which was super useful for outputting the cltv_expiry and expiration_time. 
+
+Here is Grok's explanation of that function:
+
+    def bech32toInt(bits):
+    return sum(val * (32 ** (len(bits) - 1 - i)) for i, val in enumerate(bits))
 
     The bech32toInt function converts a sequence of 5-bit values (from Bech32 decoding) into a single integer. This is critical when decoding fields like cltv_expiry or     expiration_time in a BOLT 11 invoice, where the data is stored as a series of 5-bit groups that need to be interpreted as a base-32 number.
 
@@ -95,6 +100,72 @@ Solution: Built a robust decode_payment_request function with step-by-step parsi
 
 Challenge: Calculating HTLC values was counterintuitive because it required starting from the last hop and working backwards to the first. Determining which hop’s fee and CLTV delta to apply at each step was confusing—e.g., the final hop has no fee, and fees/CLTV deltas are based on the previous hop in the reverse calculation.
 Solution: Implemented compute_htlc_values_step2 to iterate over hops in reverse, carefully tracking next_amount_msat and next_expiry while applying the prior hop’s fee and CLTV delta (except for the last hop). Extensive debugging clarified the logic.
+
+Digging deeper into cltv/fee order between hops:
+
+    Key Logic:
+    Backwards Computation: The function reverses the hop list (reversed_hops) and starts from the destination (Dave), calculating HTLCs back to the source (Alice).
+    Fee and CLTV Delta Source: For each hop, the fee and CLTV delta come from the previous hop in the payment direction (i.e., the hop that forwards the payment), except for the last hop, which has no fee or delta.
+    Step-by-Step for Alice → Bob → Carol → Dave
+    Assume:
+    
+    Final amount Dave receives: final_amount_msat = 100,000 msat.
+    Current block height: 200.
+    Invoice’s min_final_cltv: 10.
+    Hop data (in CSV order, source to destination):
+    Alice → Bob: cltv_delta = 20, base_fee_msat = 1000, proportional_fee_ppm = 1000
+    Bob → Carol: cltv_delta = 30, base_fee_msat = 2000, proportional_fee_ppm = 2000
+    Carol → Dave: cltv_delta = 40, base_fee_msat = 3000, proportional_fee_ppm = 3000
+    Reverse Order
+    reversed_hops = [Carol → Dave, Bob → Carol, Alice → Bob].
+    
+    Iteration 1: Carol → Dave (Last Hop, i = 0)
+    Starting Point:
+    next_amount_msat = 100,000 (Dave’s final amount).
+    next_expiry = 200 + 10 = 210 (current height + min_final_cltv).
+    Fee: total_fee = 0 (last hop has no fee since Dave doesn’t forward).
+    CLTV Delta: cltv_delta = 0 (no additional delta for the destination).
+    HTLC Values:
+    htlc_amount = next_amount_msat + total_fee = 100,000 + 0 = 100,000 msat.
+    htlc_expiry = next_expiry + cltv_delta = 210 + 0 = 210.
+    Update:
+    next_amount_msat = 100,000.
+    next_expiry = 210.
+    Result: Carol sends an HTLC to Dave for 100,000 msat with expiry 210.
+    Iteration 2: Bob → Carol (i = 1)
+    Previous Hop: Carol → Dave (from reversed_hops[i-1]).
+    Fee: Use Carol → Dave’s fee parameters:
+    compute_fees(100,000, 3000, 3000) = 3000 + floor((100,000 * 3000) / 1,000,000) = 3000 + 300 = 3300 msat.
+    CLTV Delta: Use Carol → Dave’s cltv_delta = 40.
+    HTLC Values:
+    htlc_amount = 100,000 + 3300 = 103,300 msat.
+    htlc_expiry = 210 + 40 = 250.
+    Update:
+    next_amount_msat = 103,300.
+    next_expiry = 250.
+    Result: Bob sends an HTLC to Carol for 103,300 msat with expiry 250.
+    Iteration 3: Alice → Bob (i = 2)
+    Previous Hop: Bob → Carol.
+    Fee: Use Bob → Carol’s fee parameters:
+    compute_fees(103,300, 2000, 2000) = 2000 + floor((103,300 * 2000) / 1,000,000) = 2000 + 206 = 2206 msat.
+    CLTV Delta: Use Bob → Carol’s cltv_delta = 30.
+    HTLC Values:
+    htlc_amount = 103,300 + 2206 = 105,506 msat.
+    htlc_expiry = 250 + 30 = 280.
+    Update: Not needed (this is the first hop).
+    Result: Alice sends an HTLC to Bob for 105,506 msat with expiry 280.
+    Final Output (Reversed Back)
+    Alice → Bob: 105,506 msat, expiry 280.
+    Bob → Carol: 103,300 msat, expiry 250.
+    Carol → Dave: 100,000 msat, expiry 210.
+    Which Fee and CLTV Delta?
+    Last Hop (Carol → Dave): No fee or CLTV delta (destination doesn’t charge or delay).
+    Intermediate/First Hops: The fee and CLTV delta come from the next hop in the forward direction (i.e., the hop receiving the payment):
+    Bob → Carol uses Carol → Dave’s fee (3000 msat base, 3000 ppm) and CLTV delta (40).
+    Alice → Bob uses Bob → Carol’s fee (2000 msat base, 2000 ppm) and CLTV delta (30).
+    Intuition: Each hop’s HTLC must cover the fee and timing requirements imposed by the next hop, ensuring the payment can proceed forward with enough funds and time.
+    Why Backwards?
+    You start with Dave’s final amount and expiry, then add fees and CLTV deltas as you move back to Alice, building the chain of HTLCs that ensures Dave gets the exact amount with sufficient time buffers.
 
 ## Outcome
 The script successfully processes sample inputs (e.g., inputStep3.csv and a 1µBTC invoice), splits multi-path payments, computes fees and CLTVs, and generates a valid output.csv. It aligns with test case expectations from the challenge repository.
