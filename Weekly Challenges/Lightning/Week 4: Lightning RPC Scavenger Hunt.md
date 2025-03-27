@@ -19,108 +19,110 @@ Lightning node pubkey: `02ef09cab9ba578cfa5158d6951148a276cbb005bba5d61b8f630b75
 timrobertson@firefly:~$ lncli -n=signet connect 03ebc7280ff486f94cee51cff45a0fc521e9fe2560c02563ab191552fa90d4017d@boss2025.xyz:9737  
 {}  
 timrobertson@firefly:~$ lncli -n=signet listpeers  
-{  
-    "peers": [  
-        {  
-            "pub_key": "03ebc7280ff486f94cee51cff45a0fc521e9fe2560c02563ab191552fa90d4017d",  
-            "address": "178.128.153.52:9737",  
-            "bytes_sent": "641",  
-            "bytes_recv": "31020",  
-            "sat_sent": "0",  
-            "sat_recv": "0",  
-            "inbound": false,  
-            "ping_time": "-1",  
-            "sync_type": "ACTIVE_SYNC",  
-            "features": {  
-                "0": {  
-                    "name": "data-loss-protect",  
-                    "is_required": true,  
-                    "is_known": true  
-                },  
-                "5": {  
-                    "name": "upfront-shutdown-script",  
-                    "is_required": false,  
-                    "is_known": true  
-                },  
-                "7": {  
-                    "name": "gossip-queries",  
-                    "is_required": false,  
-                    "is_known": true  
-                },  
-                "8": {  
-                    "name": "tlv-onion",  
-                    "is_required": true,  
-                    "is_known": true  
-                },  
-                "12": {  
-                    "name": "static-remote-key",  
-                    "is_required": true,  
-                    "is_known": true  
-                },  
-                "14": {  
-                    "name": "payment-addr",  
-                    "is_required": true,  
-                    "is_known": true  
-                },  
-                "17": {  
-                    "name": "multi-path-payments",  
-                    "is_required": false,  
-                    "is_known": true  
-                },  
-                "19": {  
-                    "name": "wumbo-channels",  
-                    "is_required": false,  
-                    "is_known": true  
-                },  
-                "23": {  
-                    "name": "anchors-zero-fee-htlc-tx",  
-                    "is_required": false,  
-                    "is_known": true  
-                },  
-                "25": {  
-                    "name": "route-blinding",  
-                    "is_required": false,  
-                    "is_known": true  
-                },  
-                "27": {  
-                    "name": "shutdown-any-segwit",  
-                    "is_required": false,  
-                    "is_known": true  
-                },  
-                "31": {  
-                    "name": "amp",  
-                    "is_required": false,  
-                    "is_known": true  
-                },  
-                "45": {  
-                    "name": "explicit-commitment-type",  
-                    "is_required": false,  
-                    "is_known": true  
-                },  
-                "2023": {  
-                    "name": "script-enforced-lease",  
-                    "is_required": false,  
-                    "is_known": true  
-                }  
-            },  
-            "errors": [],  
-            "flap_count": 1,  
-            "last_flap_ns": "1739578827453442001",  
-            "last_ping_payload": ""  
-        }  
-    ]  
-}
+    '''
+      {  
+          "peers": [  
+              {  
+                  "pub_key": "03ebc7280ff486f94cee51cff45a0fc521e9fe2560c02563ab191552fa90d4017d",  
+                  "address": "178.128.153.52:9737",  
+                  "bytes_sent": "641",  
+                  "bytes_recv": "31020",  
+                  "sat_sent": "0",  
+                  "sat_recv": "0",  
+                  "inbound": false,  
+                  "ping_time": "-1",  
+                  "sync_type": "ACTIVE_SYNC",  
+                  "features": {  
+                      "0": {  
+                          "name": "data-loss-protect",  
+                          "is_required": true,  
+                          "is_known": true  
+                      },  
+                      "5": {  
+                          "name": "upfront-shutdown-script",  
+                          "is_required": false,  
+                          "is_known": true  
+                      },  
+                      "7": {  
+                          "name": "gossip-queries",  
+                          "is_required": false,  
+                          "is_known": true  
+                      },  
+                      "8": {  
+                          "name": "tlv-onion",  
+                          "is_required": true,  
+                          "is_known": true  
+                      },  
+                      "12": {  
+                          "name": "static-remote-key",  
+                          "is_required": true,  
+                          "is_known": true  
+                      },  
+                      "14": {  
+                          "name": "payment-addr",  
+                          "is_required": true,  
+                          "is_known": true  
+                      },  
+                      "17": {  
+                          "name": "multi-path-payments",  
+                          "is_required": false,  
+                          "is_known": true  
+                      },  
+                      "19": {  
+                          "name": "wumbo-channels",  
+                          "is_required": false,  
+                          "is_known": true  
+                      },  
+                      "23": {  
+                          "name": "anchors-zero-fee-htlc-tx",  
+                          "is_required": false,  
+                          "is_known": true  
+                      },  
+                      "25": {  
+                          "name": "route-blinding",  
+                          "is_required": false,  
+                          "is_known": true  
+                      },  
+                      "27": {  
+                          "name": "shutdown-any-segwit",  
+                          "is_required": false,  
+                          "is_known": true  
+                      },  
+                      "31": {  
+                          "name": "amp",  
+                          "is_required": false,  
+                          "is_known": true  
+                      },  
+                      "45": {  
+                          "name": "explicit-commitment-type",  
+                          "is_required": false,  
+                          "is_known": true  
+                      },  
+                      "2023": {  
+                          "name": "script-enforced-lease",  
+                          "is_required": false,  
+                          "is_known": true  
+                      }  
+                  },  
+                  "errors": [],  
+                  "flap_count": 1,  
+                  "last_flap_ns": "1739578827453442001",  
+                  "last_ping_payload": ""  
+              }  
+          ]  
+      }
+    '''
 
-### Open channel to lnd2
+## Open channel to lnd2
 
-**timrobertson@firefly:~$ lncli -n=signet openchannel --node_key=03ebc7280ff486f94cee51cff45a0fc521e9fe2560c02563ab191552fa90d4017d --local_amt=50000 --private**  
+timrobertson@firefly:~$ lncli -n=signet openchannel --node_key=03ebc7280ff486f94cee51cff45a0fc521e9fe2560c02563ab191552fa90d4017d --local_amt=50000 --private
 {  
     "funding_txid": "10519d86c00e09d57e161a89314af4ff75e80d3b22befac323fed162c0bcf3c5"  
 }
 
-Check for open or pending channels:
+## Check for open or pending channels:
 
-timrobertson@firefly:~$ l**ncli -n=signet listchannels**  
+timrobertson@firefly:~$ lncli -n=signet listchannels  
 {  
     "channels": []  
 }  
@@ -158,14 +160,14 @@ timrobertson@firefly:~$ lncli -n=signet pendingchannels
 
 # Use my lightning node's cli to pay the invoice
 
-### Lightning Invoice:
+## Lightning Invoice:
 
 wallet_325,
 
 lntbs17660n1pneuwuvpp5vs7acps7tuzt0wfqlhgz5rs2cpvvd3q3xjr70yk3fkf4ure0yp7sdqswaskcmr9w30nxv34cqzzsxq9yn4qqsp50kzag0a42e6jcnc2jk4jqv0tfeptah8z36s88d8x0ruh2vp2hkaq9p4gqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpqysgq7l9jc70mgc67p6z8lz3fky5n9t4mtung8xnwrz52dpa7ur34ahgnc2u23vfmgjeck774ev9hnt3u0yr6jud42caqy2j22evqfsxefscpxez9d8,  
 643ddc061e5f04b7b920fdd02a0e0ac058c6c4113487e792d14d935e0f2f207d
 
-### Decode Invoice:
+## Decode Invoice:
 
 timrobertson@firefly:~$ lncli -n=signet decodepayreq lntbs17660n1pneuwuvpp5vs7acps7tuzt0wfqlhgz5rs2cpvvd3q3xjr70yk3fkf4ure0yp7sdqswaskcmr9w30nxv34cqzzsxq9yn4qqsp50kzag0a42e6jcnc2jk4jqv0tfeptah8z36s88d8x0ruh2vp2hkaq9p4gqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpqysgq7l9jc70mgc67p6z8lz3fky5n9t4mtung8xnwrz52dpa7ur34ahgnc2u23vfmgjeck774ev9hnt3u0yr6jud42caqy2j22evqfsxefscpxez9d8  
 {  
@@ -213,7 +215,7 @@ timrobertson@firefly:~$ lncli -n=signet decodepayreq lntbs17660n1pneuwuvpp5vs7ac
 
 &nbsp;
 
-Command to pay invoice:  
+## Command to pay invoice:  
 timrobertson@firefly:~$ lncli -n=signet payinvoice lntbs17660n1pneuwuvpp5vs7acps7tuzt0wfqlhgz5rs2cpvvd3q3xjr70yk3fkf4ure0yp7sdqswaskcmr9w30nxv34cqzzsxq9yn4qqsp50kzag0a42e6jcnc2jk4jqv0tfeptah8z36s88d8x0ruh2vp2hkaq9p4gqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpqysgq7l9jc70mgc67p6z8lz3fky5n9t4mtung8xnwrz52dpa7ur34ahgnc2u23vfmgjeck774ev9hnt3u0yr6jud42caqy2j22evqfsxefscpxez9d8
 
 will ask you to confirm payment!  
@@ -224,7 +226,7 @@ Fee limit (in satoshis): 88
 Destination: 03ebc7280ff486f94cee51cff45a0fc521e9fe2560c02563ab191552fa90d4017d  
 Confirm payment (yes/no): yes
 
-# Submit invoice preimage for points!!!
+## Submit invoice preimage for points!!!
 
 timrobertson@firefly:~$ lncli -n=signet payinvoice lntbs17660n1pneuwuvpp5vs7acps7tuzt0wfqlhgz5rs2cpvvd3q3xjr70yk3fkf4ure0yp7sdqswaskcmr9w30nxv34cqzzsxq9yn4qqsp50kzag0a42e6jcnc2jk4jqv0tfeptah8z36s88d8x0ruh2vp2hkaq9p4gqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpqysgq7l9jc70mgc67p6z8lz3fky5n9t4mtung8xnwrz52dpa7ur34ahgnc2u23vfmgjeck774ev9hnt3u0yr6jud42caqy2j22evqfsxefscpxez9d8  
 Payment hash: 643ddc061e5f04b7b920fdd02a0e0ac058c6c4113487e792d14d935e0f2f207d  
