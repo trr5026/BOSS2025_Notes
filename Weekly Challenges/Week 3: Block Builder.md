@@ -60,3 +60,19 @@ A transaction must not appear more than once in the block.
 A transaction may have zero, one or many ancestors in the mempool. It may also have zero, one or many children in the mempool.
 
 
+# Python Script
+Block Builder Challenge!
+Task: read mempool.csv and parse each line for txid, fee, weight, and parents
+Create output file block.txt with a list of txid's that maximize the miner fees.
+
+## Requirements/Constraints:
+- Transactions must be in the correct order
+- The block must not exceed the maximum block weight of 4,000,000 weight units
+- No transaction may appear more than once
+- If a transaction has parents, the parent transactions must appear before the child transaction
+- Selected transactions must maximize the miner fees
+
+## Output:
+- block.txt file with a list of [only] txid's that maximize the miner fees
+
+
