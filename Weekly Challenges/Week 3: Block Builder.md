@@ -75,4 +75,28 @@ Create output file block.txt with a list of txid's that maximize the miner fees.
 ## Output:
 - block.txt file with a list of [only] txid's that maximize the miner fees
 
+## parse_mempool_csv
+  """Parse the CSV file and return a list of MempoolTransactions."""
+
+## create_parent_lookup
+    """
+    The purpose of this function is to create a dictionary that contains txid, fee, weight, and FWR
+    for all parent transactions. We'll need this dict when implementing our fee-maximizing logic.
+
+    Inputs:
+    - parent_txids: List of unique parent transaction IDs.
+    - transactions: List of all transactions with txid, fee, weight, FWR.
+
+    Returns:
+    - parent_lookup: Dictionary {parent_txid: {"fee": int, "weight": int, "FWR": float}}
+
+
+    """
+
+## sort_transactions_fwr
+    """
+      Sort transactions by fee/weight ratio. We want the highest fees and lowest weight, so 
+      we will sort by highest f/w ration to lowest f/w ratio    
+    """
+  
 
