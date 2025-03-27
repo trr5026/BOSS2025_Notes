@@ -122,11 +122,11 @@ Reverse Order
 reversed_hops = [Carol → Dave, Bob → Carol, Alice → Bob].
 
 ### Iteration 1: Carol → Dave (Last Hop, i = 0)
-Starting Point:
-next_amount_msat = 100,000 (Dave’s final amount).
+Starting Point: next_amount_msat = 100,000 (Dave’s final amount).
 next_expiry = 200 + 10 = 210 (current height + min_final_cltv).
 Fee: total_fee = 0 (last hop has no fee since Dave doesn’t forward).
 CLTV Delta: cltv_delta = 0 (no additional delta for the destination).
+
 HTLC Values:
 htlc_amount = next_amount_msat + total_fee = 100,000 + 0 = 100,000 msat.
 htlc_expiry = next_expiry + cltv_delta = 210 + 0 = 210.
