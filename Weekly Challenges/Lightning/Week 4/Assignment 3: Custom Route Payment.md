@@ -1,6 +1,6 @@
 # Assignment 3: Custom Route Payment
 
-# nodes
+## nodes
 
 LND2  
 Lightning node P2P address: boss2025.xyz:9737
@@ -12,13 +12,13 @@ Lightning node P2P address: boss2025.xyz:9738
 
 Lightning node pubkey: 02ef09cab9ba578cfa5158d6951148a276cbb005bba5d61b8f630b75769d8df3f5
 
-# Invoice
+## Invoice
 
 wallet_325,lntbs32540n1pneu0qjpp5llgu8evc65weq3mstxe7s3wxke7j9qzat9548w29xtzudtlug9msdqswaskcmr9w30nxv34cqzzsxq9yn4qqsp5fzeulg9zsqsr5c9rnzkgu9wfxsfc9dsudv3hj4t0jfyfledpkkyq9p4gqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpqysgqcskzuugsk8nnjl3ryuh220eu3r43dgrrhqesy8fg52xsk9nlqj4s4590uq305uee2n6nhmrhpygqmsqu5m0ux6pdashny7vvgvx8fncq06kd03,
 
 ffd1c3e598d51d90477059b3e845c6b67d22805d596953b94532c5c6affc4177
 
-# Open unannounced channel to lnd3
+## Open unannounced channel to lnd3
 
 First: connect to lnd3 node:
     
@@ -28,7 +28,7 @@ First: connect to lnd3 node:
     lncli -n=signet listpeers
     '''
 
-# Next, open channel:
+## Next, open channel:
 
 
     timrobertson@firefly:~$ lncli -n=signet openchannel --node_key=02ef09cab9ba578cfa5158d6951148a276cbb005bba5d61b8f630b75769d8df3f5 --local_amt=50000 --private  
@@ -38,12 +38,12 @@ First: connect to lnd3 node:
 
 
 
-# Check # of confirmations on channel just opened:
+## Check # of confirmations on channel just opened:
 
     timrobertson@firefly:~$ bitcoin-cli -signet getrawtransaction 546f6d4f7b0d6b5f475fb51275712f3e307dd2dda4de069b53abd5cbcd9aab9a 1 | jq '.confirmations'
 
 
-# Decode invoice
+## Decode invoice
 
     timrobertson@firefly:~$ lncli -n=signet decodepayreq lntbs32540n1pneu0qjpp5llgu8evc65weq3mstxe7s3wxke7j9qzat9548w29xtzudtlug9msdqswaskcmr9w30nxv34cqzzsxq9yn4qqsp5fzeulg9zsqsr5c9rnzkgu9wfxsfc9dsudv3hj4t0jfyfledpkkyq9p4gqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpqysgqcskzuugsk8nnjl3ryuh220eu3r43dgrrhqesy8fg52xsk9nlqj4s4590uq305uee2n6nhmrhpygqmsqu5m0ux6pdashny7vvgvx8fncq06kd03  
     {  
@@ -89,7 +89,7 @@ First: connect to lnd3 node:
         "blinded_paths": []  
     }
 
-# Buildroute command
+## Buildroute command
 
 We need to build this route: myLNDnode -> lnd3 -> lnd2
 
@@ -185,7 +185,7 @@ JSON Output:
 
 Payment Hash: ffd1c3e598d51d90477059b3e845c6b67d22805d596953b94532c5c6affc4177
 
-# Assemble sendtoroute command:
+## Assemble sendtoroute command:
 
 &nbsp;
 
@@ -245,7 +245,7 @@ Payment Hash: ffd1c3e598d51d90477059b3e845c6b67d22805d596953b94532c5c6affc4177
 
 Preimage: 8cae6321d4dd24d6a5c50ede0feaf04a042e4102e70dd5a6f4a54fc4c2b88daf
 
-# Final Sendtoroute command (successful)
+## Final Sendtoroute command (successful)
 
 Define route variable
 
@@ -290,7 +290,7 @@ Define route variable
 
 
 
-# Verify Route variable is correct
+## Verify Route variable is correct
 
 
     timrobertson@firefly:~$ echo "$Route"  
@@ -348,11 +348,11 @@ Define route variable
     }
 
 
-# Assemble sendtoroute command
+## Assemble sendtoroute command
 
     timrobertson@firefly:~$ lncli -n=signet sendtoroute --payment_hash=ffd1c3e598d51d90477059b3e845c6b67d22805d596953b94532c5c6affc4177 --routes="$Route"
 
-# Output
+## Output
 
     {  
         "attempt_id": "2",  
